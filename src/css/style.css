@@ -1,0 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Righteous&family=Roboto+Condensed&display=swap');
+:root {
+  --font-body: 'Righteous', cursive;
+  --font-headline: 'Roboto Condensed', sans-serif;
+  /* colors */
+  --primary-color: #a8c686;
+  --secondary-color: #9d9c62;
+  --tertiary-color: #e4572e;
+  --additional-color: #f0f66e;
+  --bg-color: #f0f8ea;
+
+  /* sizes */
+  --font-base: 18px;
+  --small-font: 0.8em;
+  --large-font: 1.2em;
+}
