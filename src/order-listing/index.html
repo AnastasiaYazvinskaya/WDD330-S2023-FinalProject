@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FixWork | Orders</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <script src="../js/order-listing.js" type="module"></script>
+  </head>
+  <body>
+    <header id="main-header"><!-- partials/header.html --></header>
+    <main>
+      <h1><span id="list-type"></span> orders</h1>
+      <div id="content">
+        <!--<div class="row">
+          <form>
+            <input type="text" name="search" />
+            <button type="submit" id="filterList">Search</button>
+          </form>
+        </div>-->
+        <table>
+          <!-- Active/Closed orders -->
+          <thead>
+            <tr>
+              <th id="number">Number</th>
+              <th id="equip">Equipment</th>
+              <th id="date">Created</th>
+              <th id="stage">Stage</th>
+              <th id="client" class="mobile-hide">Client name</th>
+              <th id="contact" class="mobile-hide">Contact</th>
+              <th id="price" class="mobile-hide">Cur.Price</th>
+            </tr>
+          </thead>
+          <tbody class="order-list">
+            <!--<tr>
+              <td>Number</td>
+              <td>Equipment</td>
+              <td>Creation date</td>
+              <td>Work stage</td>
+              <td class="mobile-hide">Client name</td>
+              <td class="mobile-hide">Contact</td>
+              <td class="mobile-hide">Cur.Price</td>
+            </tr>-->
+          </tbody>
+        </table>
+      </div>
+    </main>
+    <footer id="main-footer"><!-- partials/footer.html --></footer>
+  </body>
+</html>
