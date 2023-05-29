@@ -3,7 +3,7 @@ import { renderListTemplate } from "./utils.mjs";
 /* Generate a list of product cards in HTML from an array */
 function orderRowTemplate(order) {
     return `<tr>
-        <td><a href="#">${order.Number}</a></td>
+        <td><a href="../order/index.html?order=${order.Id}">${order.Number}</a></td>
         <td class="left">${order.Equipment.Name}<br>${order.Equipment.Brand} ${order.Equipment.Model}</td>
         <td>${order.CreationDate}</td>
         <td>${order.WorkStage}</td>

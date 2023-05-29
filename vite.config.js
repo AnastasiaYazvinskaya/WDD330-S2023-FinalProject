@@ -10,6 +10,7 @@ export default defineConfig({
       input: {
         main: resolve(__dirname, "src/index.html"),
         listing: resolve(__dirname, "src/order-listing/index.html"),
+        order: resolve(__dirname, "src/order/index.html"),
       },
     },
   },
