@@ -1,0 +1,104 @@
+[
+  {
+    "Id": "1",
+    "Number": "1",
+    "Equipment": {
+      "Name": "Equipment name",
+      "Brand": "Equipment brand",
+      "Model": "Equipment model"
+    },
+    "Client": {
+      "Id": "1",
+      "Name": "Client full name",
+      "Contact": "+7 900 000 00-00"
+    },
+    "Work": {
+      "Services": [
+        {
+          "Id": "1",
+          "Name": "Service name",
+          "Price": 100.0
+        }
+      ],
+      "Spares": [
+        {
+          "Id": "1",
+          "Name": "Spare name",
+          "Price": 100.0
+        }
+      ]
+    },
+    "FinalPrice": 200.0,
+    "WorkStage": "closed",
+    "Type": "closed",
+    "CreationDate": "2023-10-12"
+  },
+  {
+    "Id": "2",
+    "Number": "2",
+    "Equipment": {
+      "Name": "Equipment name",
+      "Brand": "Equipment brand",
+      "Model": "Equipment model"
+    },
+    "Client": {
+      "Id": "1",
+      "Name": "Client full name",
+      "Contact": "+7 900 000 00-00"
+    },
+    "Work": {
+      "Services": [
+        {
+          "Id": "1",
+          "Name": "Service name",
+          "Price": 100.0
+        }
+      ],
+      "Spares": [
+        {
+          "Id": "1",
+          "Name": "Spare name",
+          "Price": 100.0
+        }
+      ]
+    },
+    "FinalPrice": 200.0,
+    "WorkStage": "in work",
+    "Type": "active",
+    "CreationDate": "2023-10-12"
+  },
+  {
+    "Id": "3",
+    "Number": "3",
+    "Equipment": {
+      "Name": "Equipment name",
+      "Brand": "Equipment brand",
+      "Model": "Equipment model"
+    },
+    "Client": {
+      "Id": "1",
+      "Name": "Client full name",
+      "Contact": "+7 900 000 00-00"
+    },
+    "Work": {
+      "Services": [
+        {
+          "Id": "1",
+          "Name": "Service name",
+          "Price": 100.0
+        }
+      ],
+      "Spares": [
+        {
+          "Id": "1",
+          "Name": "Spare name",
+          "Price": 100.0
+        }
+      ]
+    },
+    "FinalPrice": 200.0,
+    "WorkStage": "new",
+    "Type": "active",
+    "CreationDate": "2023-10-12"
+  }
+]

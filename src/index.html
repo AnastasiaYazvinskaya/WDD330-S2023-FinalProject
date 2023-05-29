@@ -3,46 +3,41 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sleep Outside | Home</title>
+    <title>FixWork | Home</title>
     <link rel="stylesheet" href="/css/style.css" />
     <script src="js/main.js" type="module"></script>
   </head>
   <body>
     <header id="main-header"><!-- partials/header.html --></header>
     <main>
-      <section>
-        <p>Application for workshop workers to keep track of accepted equipment and completed work</p>
+      <section class="mission">
+        <h1>Fix<span class="tertiary">Work</span></h1>
+        <p>
+          Application for workshop workers to keep track of accepted equipment
+          and completed work
+        </p>
       </section>
-      <section>
-        <ul>
+      <section class="variants">
+        <ul class="var-grid">
           <li>
             <a href="#">
-              <h2>Create new order</h2>
+              <h2>Create<br />new order</h2>
               <p>when you accept an equipment to work</p>
-              <img
-                src="images/category-icons/noun_Tent_3544767.svg"
-                alt="Add new order image"
-              />
+              <img src="images/add_btn.svg" alt="Add new order image" />
             </a>
           </li>
           <li>
-            <a href="#">
-              <h2>Find and view active order</h2>
+            <a href="../order-listing/index.html?type=active">
+              <h2>Find and view<br />active order</h2>
               <p>before starting work on an equipment</p>
-              <img
-                src="images/category-icons/noun_carrier bag_3544771.svg"
-                alt="View active orders image"
-              />
+              <img src="images/active_btn.svg" alt="View active orders image" />
             </a>
           </li>
           <li>
-            <a href="#">
-              <h2>Find and view last order</h2>
+            <a href="../order-listing/index.html?type=closed">
+              <h2>Find and view<br />last order</h2>
               <p>of the same equipment</p>
-              <img
-                src="images/category-icons/noun_Sleeping Bag_3544775.svg"
-                alt="View closed orders image"
-              />
+              <img src="images/closed_btn.svg" alt="View closed orders image" />
             </a>
           </li>
         </ul>
