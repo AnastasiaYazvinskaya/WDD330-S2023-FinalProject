@@ -88,8 +88,8 @@ function orderSparesTemplate(spare) {
         if (this.order.Type === "active") {
             this.renderButtonInWork();
         } else if (this.order.Type === "closed") {
-            console.log("closed");
             //this.renderButtonReopen();
+            console.log("closed");
         }
     }
     async renderOrderWorks() {
@@ -117,7 +117,16 @@ function orderSparesTemplate(spare) {
         for (var i in this.order.Spares) {
             element.insertAdjacentHTML(
                 "afterBegin",
-                `<a class="button" href="#">In work</a>`
+                `<a class="button" href="../order-work/closeOrder.html?order=${this.order.Id}">In work</a>`
+            );
+        }
+    }
+    renderButtonReopen()  {
+        const element = document.querySelector("#buttons");
+        for (var i in this.order.Spares) {
+            element.insertAdjacentHTML(
+                "afterBegin",
+                `<a class="button" href="../order-work/newOrder.html?order=${this.order.Id}">Reopen</a>`
             );
         }
     }

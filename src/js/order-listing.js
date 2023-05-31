@@ -11,15 +11,15 @@ const element = document.querySelector(".order-list");
 const list = new OrderListing(type, dataSource, element);
 list.init();
 
-document
-    .querySelector("#filterList")
-    .addEventListener("click", (e) => {
-        e.preventDefault();
-        list.filterList();
+document.querySelector("#filterList").addEventListener("click", (e) => {
+  e.preventDefault();
+  list.filterList();
 });
-document
-    .querySelector("#filterReset")
-    .addEventListener("click", (e) => {
-        e.preventDefault();
-        list.resetList();
+document.querySelector("#filterReset").addEventListener("click", (e) => {
+  e.preventDefault();
+  list.resetList();
 });
+/*document.querySelector("#clearLS").addEventListener("click", (e) => {
+  e.preventDefault();
+  list.cleareLocalStorage();
+});*/
