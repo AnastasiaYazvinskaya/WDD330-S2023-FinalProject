@@ -116,6 +116,7 @@ main {
   border: 1px black solid;
   border-radius: 10px;
   background-color: var(--primary-color);
+  transition: transform 2s;
 }
 .var-grid li:nth-child(1) {
   width: 60%;
@@ -137,6 +138,7 @@ main {
 }
 .var-grid li:hover {
   box-shadow: 0 0 30px var(--secondary-color);
+  transform: scale(1.2);
 }
 main h1 {
   text-align: center;
