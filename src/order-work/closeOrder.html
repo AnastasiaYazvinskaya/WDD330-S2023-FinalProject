@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FixWork | Order Details</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <script src="../js/closeOrder.js" type="module"></script>
+  </head>
+  <body>
+    <header id="main-header"><!-- partials/header.html --></header>
+    <main>
+      <h1>New order #<span id="orderId"></span></h1>
+      <form id="order-details" name="order">
+        <div class="block">
+          <h3>Info</h3>
+          <div class="flex">
+            <p id="equipment"><b>Equpment:</b></p>
+            <p id="client"><b>Client:</b></p>
+          </div>
+          <div class="row">
+            <label for="defects"><b>Defects:</b></label>
+            <textarea id="defects" name="defects" readonly></textarea>
+          </div>
+          <div class="row">
+            <label for="complaints"><b>Complaints:</b></label>
+            <textarea id="complaints" name="complaints" readonly></textarea>
+          </div>
+        </div>
+        <div class="block">
+          <div class="table-data">
+            <p><b>Services</b></p>
+            <table>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th id="price">Price</th>
+                </tr>
+              </thead>
+              <tbody id="work"></tbody>
+            </table>
+            <button type="button" class="add add-service">+ Service</button>
+          </div>
+          <div class="table-data">
+            <p><b>Spares</b></p>
+            <table>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th id="price">Price</th>
+                </tr>
+              </thead>
+              <tbody id="spares"></tbody>
+            </table>
+            <button type="button" class="add add-spare">+ Spare</button>
+          </div>
+          <p>
+            <b>Estimated price: <span id="total">0.00</span> RUB</b>
+          </p>
+        </div>
+        <div id="create-buttons">
+          <a
+            id="cancel"
+            class="button"
+            href="../order-listing/index.html?type=active"
+            >Cancel</a
+          >
+          <button id="check" type="submit">Check</button>
+          <button id="save" type="submit">Save</button>
+          <button id="next" type="submit">Complete</button>
+        </div>
+      </form>
+    </main>
+    <footer id="main-footer"><!-- partials/footer.html --></footer>
+  </body>
+</html>

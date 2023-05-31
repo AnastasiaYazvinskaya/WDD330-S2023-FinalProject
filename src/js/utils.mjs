@@ -25,9 +25,7 @@ export function getLocatStorageById(key, id) {
 }
 export function filterLocatStorage(key, type, input) {
   var list = getLocatStorageByType(key, type);
-  console.log(list);
   if (list) {
-    console.log(list);
     return list.filter((item) => (
               item.Equipment.Name == input ||
               item.Equipment.Brand == input ||
@@ -37,6 +35,13 @@ export function filterLocatStorage(key, type, input) {
               item.WorkStage == input ||
               item.CreationDate == input ||
               item.Number == input ));
+  }
+  return list;
+}
+export function findClientByNameAndContact(key, name, contact) {
+  var list = getLocalStorage(key);
+  if (list) {
+    return list.filter((item) => (item.Name === name && item.Contact === contact));
   }
   return list;
 }
@@ -60,7 +65,7 @@ export function getParams(param) {
   return urlParam;
 }
 
-export function renderListTemplate(template, parentElement, list, position="afterbegin", clear=false) {
+export function renderListTemplate(template, parentElement, list, position="afterBegin", clear=false) {
   const htmlStrings = list.map(template);
   if (clear) {
     parentElement.innerHTML = "";
@@ -69,7 +74,7 @@ export function renderListTemplate(template, parentElement, list, position="afte
 }
 
 export function renderTemplate(template, parentElement, data, callback) {
-  parentElement.insertAdjacentHTML("afterbegin", template);
+  parentElement.insertAdjacentHTML("afterBegin", template);
   if(callback) {
     callback(data);
   }
@@ -110,4 +115,12 @@ export function alertMessage(message, scroll = true, duration = 3000) {
 export function removeAllAlerts() {
   const alerts = document.querySelectorAll(".alert");
   alerts.forEach((alert) => document.querySelector("main").removeChild(alert));
+}
+
+export function sleep(milliseconds) {
+  const date = Date.now();
+  let currentDate = null;
+  do {
+    currentDate = Date.now();
+  } while (currentDate - date < milliseconds);
 }

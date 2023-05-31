@@ -3,16 +3,12 @@
     "Id": "1",
     "Name": "Service1 name",
     "Price": 100.0,
-    "Spares": [
-      "1"
-    ]
+    "Spares": ["1"]
   },
   {
     "Id": "2",
     "Name": "Service2 name",
     "Price": 150.0,
-    "Spares": [
-      "2"
-    ]
+    "Spares": ["2"]
   }
 ]

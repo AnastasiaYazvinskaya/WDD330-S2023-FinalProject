@@ -192,7 +192,8 @@ input {
   width: 200px;
   height: 25px;
 }
-button, .button {
+button,
+.button {
   width: fit-content;
   padding: 2px 5px;
   font-size: 1em;
@@ -216,7 +217,8 @@ button, .button {
   width: fit-content;
   padding: 0 5px;
 }
-#order-details p, #order-details label{
+#order-details p,
+#order-details label {
   margin: 5px;
 }
 .flex {
@@ -239,7 +241,8 @@ textarea {
 label {
   width: 50%;
 }
-input, select {
+input,
+select {
   width: 100%;
 }
 #search-form {
@@ -267,6 +270,14 @@ input, select {
   position: absolute;
   right: 0.5em;
 }
+#check {
+  position: absolute;
+  right: 9.5em;
+}
+#save {
+  position: absolute;
+  right: 6em;
+}
 #cancel {
   margin-left: 0.5em;
 }
@@ -276,7 +287,6 @@ input, select {
   font-size: 0.8em;
   width: 5em;
 }
-
 
 /* FOOTER */
 footer {
@@ -307,7 +317,9 @@ footer {
   table td {
     padding: 5px;
   }
-  #order-details, #buttons, #create-buttons {
+  #order-details,
+  #buttons,
+  #create-buttons {
     margin: 0 auto;
     max-width: 80%;
     position: relative;
@@ -324,13 +336,15 @@ footer {
   label {
     width: 15%;
   }
-  input, select {
+  input,
+  select {
     width: 80%;
   }
   table select {
     width: 100%;
   }
-  .flex p:nth-child(n), .client .row {
+  .flex p:nth-child(n),
+  .client .row {
     width: 50%;
   }
   .equipment .row {
@@ -339,4 +353,55 @@ footer {
   textarea {
     height: 1.5em;
   }
+}
+
+/* Animation */
+@keyframes logo {
+  0% {
+    rotate: 0deg;
+  }
+  12.5% {
+    rotate: 45deg;
+  }
+  25% {
+    rotate: 90deg;
+  }
+  37.5% {
+    rotate: 135deg;
+  }
+  50% {
+    rotate: 180deg;
+  }
+  62.5% {
+    rotate: 225deg;
+  }
+  75% {
+    rotate: 270deg;
+  }
+  87.5% {
+    rotate: 315deg;
+  }
+  100% {
+    rotate: 360deg;
+  }
+}
+.logo img {
+  animation-name: logo;
+  animation-duration: 10s;
+  animation-iteration-count: infinite;
+}
+@keyframes orders {
+  0% {
+    scale: 1;
+  }
+  50% {
+    scale: 1.5;
+  }
+  100% {
+    scale: 1;
+  }
+}
+.order-scale {
+  animation-name: orders;
+  animation-duration: 2s;
 }

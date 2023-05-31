@@ -1,5 +1,6 @@
-import { getLocalStorage, setLocalStorage, alertMessage, removeAllAlerts } from "./utils.mjs";
+import { getLocatStorageById, findClientByNameAndContact, getLocalStorage, setLocalStorage, alertMessage, removeAllAlerts } from "./utils.mjs";
 import ExternalServices from "./ExternalServices.mjs";
+
 
 function formDataToJSON(formElement) {
     const formData = new FormData(formElement),
@@ -11,38 +12,33 @@ function formDataToJSON(formElement) {
   
     return convertedJSON;
   }
-  
-  function packageItems(items) {
-    const simplifiedItems = items.map((item) => {
-      console.log(item);
-      return {
-        id: item.Id,
-        price: item.FinalPrice,
-        name: item.Name,
-        quantity: 1,
-      };
-    });
-    return simplifiedItems;
-  }
 
 export default class WorkOrder {
-  constructor(key, outputSelector) {
-    this.key = key;
-    this.outputSelector = outputSelector;
+  constructor(orderId) {
+    this.orderId = orderId;
     this.orderTotal = 0;
+    this.order = null;
   }
   init() {
-    var number = getLocalStorage("orders");
-    if (number) {
-        number = number.length;
-    } else {
-        number = 0;
+    var number = this.orderId;
+    if (!number) {
+        number = getLocalStorage("orders");
+        if (number) {
+            number = number.length;
+        } else {
+            number = 0;
+        }
     }
-    document.querySelector("#orderId").innerHTML = number+1;
-
-    this.fillDatalist();
-    this.fillService();
-    this.fillSpare();
+    document.querySelector("#orderId").innerHTML = parseInt(number)+1;
+    if (!this.orderId) {
+        this.fillDatalist();
+        this.fillService();
+        this.fillSpare();
+        document.querySelector(".w1").addEventListener("change", this.setPrice.bind(this));
+        document.querySelector(".s1").addEventListener("change", this.setPrice.bind(this));
+    } else {
+        this.fillClosedata();
+    }
   }
   async fillDatalist() {
     const base = await new ExternalServices("basedata").getData();
@@ -67,40 +63,139 @@ export default class WorkOrder {
             `<option value="${models[i].Id}">${models[i].Name}</option>`
         );
     }*/
-    const clients = await new ExternalServices("clients").getData();
+    const clients = getLocalStorage("clients");
     for (var i in clients) {
         document.querySelector("#clients").insertAdjacentHTML(
             "beforeEnd",
-            `<option>${clients[i].Name}</option>`
+            `<option value="${clients[i].Name}">${clients[i].Contact}</option>`
         );
     }
   }
-  async fillService() {
+  async fillService(service=null) {
     const services = await new ExternalServices("services").getData();
     const worksIds = document.querySelectorAll(".in-work");
     for (var i in services) {
-        worksIds[worksIds.length-1].insertAdjacentHTML(
-            "beforeEnd",
-            `<option value="${services[i].Id}">${services[i].Name}</option>`
-        );
+        if (service != null && service === services[i].Name) {
+            worksIds[worksIds.length-1].insertAdjacentHTML(
+                "beforeEnd",
+                `<option value="${services[i].Id}" selected>${services[i].Name}</option>`
+            );
+        } else {
+            worksIds[worksIds.length-1].insertAdjacentHTML(
+                "beforeEnd",
+                `<option value="${services[i].Id}">${services[i].Name}</option>`
+            );
+        }
     }
   }
-  async fillSpare() {
+  async fillSpare(spare=null) {
     const spares = await new ExternalServices("spares").getData();
     const sparesIds = document.querySelectorAll(".in-spare");
     for (var i in spares) {
-        sparesIds[sparesIds.length-1].insertAdjacentHTML(
-            "beforeEnd",
-            `<option value="${spares[i].Id}">${spares[i].Name}</option>`
-        );
+        if (spare != null && spare === spares[i].Name) {
+            sparesIds[sparesIds.length-1].insertAdjacentHTML(
+                "beforeEnd",
+                `<option value="${spares[i].Id}" selected>${spares[i].Name}</option>`
+            );
+        } else {
+            sparesIds[sparesIds.length-1].insertAdjacentHTML(
+                "beforeEnd",
+                `<option value="${spares[i].Id}">${spares[i].Name}</option>`
+            );
+        }
+    }
+  }
+  async fillClosedata() {
+    this.order = getLocatStorageById("orders", this.orderId)[0];
+
+    document.querySelector("#equipment").insertAdjacentHTML("beforeEnd", ` ${this.order.Equipment.Name} ${this.order.Equipment.Brand} ${this.order.Equipment.Model}`);
+    document.querySelector("#client").insertAdjacentHTML("beforeEnd", ` ${this.order.Client.Name} (${this.order.Client.Contact})`);
+    document.querySelector("#defects").innerHTML = this.order.Defects;
+    document.querySelector("#complaints").innerHTML = this.order.Complaints;
+    //Works
+    const works = document.querySelector("#work");
+    if (this.order.Works.length != 0) {
+        for (var i=0; i < this.order.Works.length; i++) {
+            const service = await new ExternalServices("services").findOrderById(this.order.Works[i]);
+            this.orderTotal += service.Price;
+            works.insertAdjacentHTML("beforeEnd", `<tr>
+                <td>
+                    <select class="in-work w${parseInt(i)+1}" name="works">
+                        <option></option>
+                    </select>
+                </td>
+                <td class="work-price">${service.Price} RUB</td>
+            </tr>`)
+            this.fillService(service.Name);
+            this.calculateOrdertotal();
+            document.querySelector(".w"+(parseInt(i)+1)).addEventListener("change", this.setPrice.bind(this));
+            //document.querySelector("#w"+(i+1)).addEventListener("change", this.setServicePrice.bind(this));
+        }
+    } else {
+        works.insertAdjacentHTML("beforeEnd", `<tr>
+            <td>
+                <select class="in-work w1" name="works">
+                    <option></option>
+                </select>
+            </td>
+            <td class="work-price"></td>
+        </tr>`)
+        this.fillService();
+        document.querySelector(".w1").addEventListener("change", this.setPrice.bind(this));
+    }
+    const spares = document.querySelector("#spares");
+    if (this.order.Spares.length != 0) {
+        for (var i in this.order.Spares) {
+            const spare = await new ExternalServices("spares").findOrderById(this.order.Spares[i]);
+            this.orderTotal += spare.Price;
+            spares.insertAdjacentHTML("beforeEnd", `<tr>
+                <td>
+                    <select class="in-spare s${parseInt(i)+1}" name="spare" value="${spare.Id}">
+                        <option></option>
+                    </select>
+                </td>
+                <td class="spare-price">${spare.Price} RUB</td>
+            </tr>`)
+            this.fillSpare(spare.Name);
+            this.calculateOrdertotal();
+            document.querySelector(".s"+(parseInt(i)+1)).addEventListener("change", this.setPrice.bind(this));
+        }
+    } else {
+        spares.insertAdjacentHTML("beforeEnd", `<tr>
+            <td>
+                <select class="in-spare s1" name="spare">
+                    <option></option>
+                </select>
+            </td>
+            <td class="spare-price"></td>
+        </tr>`)
+        this.fillSpare();
+        document.querySelector(".s1").addEventListener("change", this.setPrice.bind(this));
     }
   }
   async setContact() {
     const name = document.querySelector("#fullname").value;
-    const client = await new ExternalServices("clients").findOrderByName(name);
-    if (client) {
-        document.querySelector("#contact").value = client.Contact;
+    const contact = document.querySelector("option[value='"+name+"']");
+    if (contact) {
+        document.querySelector("#contact").value = contact.textContent;
     }
+  }
+  async saveClient(name, contact) {
+    var clients = getLocalStorage("clients");
+    if (!clients) {
+        clients = [];
+    }
+    clients.push({
+        "Id": String(clients.length+1),
+        "Name": name,
+        "Contact": contact
+    });  
+    console.log(clients);
+    setLocalStorage("clients", clients);
+  }
+  setPrice() {
+    this.orderTotal = 0;
+    this.setServicePrice();
   }
   async setServicePrice() {
     const ids = document.querySelectorAll(".in-work");
@@ -111,14 +206,10 @@ export default class WorkOrder {
             this.orderTotal += service.Price;
             prices[i].innerHTML = service.Price + " RUB";
         } else {
-            if (prices[i].innerHTML) {
-                console.log(prices[i].innerHTML);
-                this.orderTotal -= parseFloat(prices[i].innerHTML);
-                prices[i].innerHTML = "";
-            }
+            prices[i].innerHTML = "";
         }
     }
-    this.calculateOrdertotal();
+    this.setSparePrice();
   }
   async setSparePrice() {
     const ids = document.querySelectorAll(".in-spare");
@@ -129,11 +220,7 @@ export default class WorkOrder {
             this.orderTotal += spare.Price;
             prices[i].innerHTML = spare.Price + " RUB";
         } else {
-            if (prices[i].innerHTML) {
-                console.log(prices[i].innerHTML);
-                this.orderTotal -= parseFloat(prices[i].innerHTML);
-                prices[i].innerHTML = "";
-            }
+            prices[i].innerHTML = "";
         }
     }
     this.calculateOrdertotal();
@@ -142,31 +229,35 @@ export default class WorkOrder {
     document.querySelector("#total").innerHTML = this.orderTotal;
   }
   addService() {
-    if (document.querySelectorAll(".in-work").length == 4) {
+    const num = document.querySelectorAll(".in-work").length;
+    if (num == 4) {
         document.querySelector(".add-service").classList.add("hide");
     }
     document.querySelector("#work").insertAdjacentHTML(
         "beforeEnd",
         `<tr>
             <td>
-                <select id="in-work" class="in-work" name="works">
+                <select class="in-work w${parseInt(num)+1}" name="works">
                     <option></option>
                 </select>
             </td>
             <td class="work-price"></td>
         </tr>`
     );
+    
     this.fillService();
+    document.querySelector(".w"+(parseInt(num)+1)).addEventListener("change", this.setPrice.bind(this));
   }
   addSpare() {
-    if (document.querySelectorAll(".in-spare").length == 4) {
+    const num = document.querySelectorAll(".in-spare").length;
+    if (num == 4) {
         document.querySelector(".add-spare").classList.add("hide");
     }
     document.querySelector("#spares").insertAdjacentHTML(
         "beforeEnd",
         `<tr>
             <td>
-                <select id="in-spare" class="in-spare" name="spares">
+                <select class="in-spare s${parseInt(num)+1}" name="spares">
                     <option></option>
                 </select>
             </td>
@@ -175,8 +266,9 @@ export default class WorkOrder {
     );
     
     this.fillSpare();
+    document.querySelector(".s"+(parseInt(num)+1)).addEventListener("change", this.setPrice.bind(this));
   }
-  async save() {
+  async create() {
     const formElement = document.forms["order"];
     const json = formDataToJSON(formElement);
     let content = getLocalStorage("orders");
@@ -225,6 +317,114 @@ export default class WorkOrder {
     content.push(order);
 
     setLocalStorage("orders", content);
+
+    const client = findClientByNameAndContact("clients", order.Client.Name, order.Client.Contact);
+    if (!client) {
+        this.saveClient(order.Client.Name, order.Client.Contact);
+    }
+
     location.assign("../order-listing/index.html?type=active")
+  }
+  async close() {
+    let content = getLocalStorage("orders");
+    const number = this.orderId;
+    
+    var order = this.order;
+    order.Works = [];
+    order.Spares = [];
+    order.WorkStage = "closed";
+    order.Type = "closed";
+    order.FinalPrice = this.orderTotal;
+    
+    const works = document.querySelectorAll(".in-work");
+    for (var i=0; i < works.length; i++) {
+        if (works[i].value) {
+            order.Works.push(works[i].value);
+        }
+    }
+    const spares = document.querySelectorAll(".in-spare");
+    for (var i=0; i < spares.length; i++) {
+        if (works[i].value) {
+            order.Spares.push(spares[i].value);
+        }
+    }
+
+    content[this.orderId] = order;
+
+    setLocalStorage("orders", content);
+    //console.log(getLocalStorage("orders"));
+    location.assign("../order-listing/index.html?type=active")
+  }
+  async save() {
+    let content = getLocalStorage("orders");
+    const number = this.orderId;
+    
+    var order = this.order;
+    order.Works = [];
+    order.Spares = [];
+    order.WorkStage = "in work";
+    order.FinalPrice = this.orderTotal;
+    
+    const works = document.querySelectorAll(".in-work");
+    for (var i=0; i < works.length; i++) {
+        if (works[i].value) {
+            order.Works.push(works[i].value);
+        }
+    }
+    const spares = document.querySelectorAll(".in-spare");
+    for (var i=0; i < spares.length; i++) {
+        if (works[i].value) {
+            order.Spares.push(spares[i].value);
+        }
+    }
+
+    content[this.orderId] = order;
+
+    setLocalStorage("orders", content);
+    location.assign("../order-listing/index.html?type=active")
+  }
+  async check() {
+    var order = this.order;
+    order.Works = [];
+    order.Spares = [];
+    order.WorkStage = "in work";
+    order.FinalPrice = this.orderTotal;
+    
+    const works = document.querySelectorAll(".in-work");
+    for (var i=0; i < works.length; i++) {
+        if (works[i].value) {
+            const work = new ExternalServices("services").findOrderById(works[i].value);
+            work.then((item) => {
+                order.Works.push({
+                    "Name": item.Name,
+                    "Price": item.Price
+                });
+            });
+        }
+    }
+    const spares = document.querySelectorAll(".in-spare");
+    for (var i=0; i < spares.length; i++) {
+        if (spares[i].value) {
+            //order.Spares.push(spares[i].value);
+            const spare = new ExternalServices("spares").findOrderById(spares[i].value);
+            /*order.Spares.push({
+                "Name": spare.Name,
+                "Price": spare.Price
+            });*/
+            spare.then((item) => {
+                order.Spares.push({
+                    "Name": item.Name,
+                    "Price": item.Price
+                });
+            });
+        }
+    }
+    try {
+      const res = await new ExternalServices().check(order);
+      console.log(res);
+      window.open(res.download_url);
+    } catch (err) {
+      console.log(err);
+    }
   }
 }

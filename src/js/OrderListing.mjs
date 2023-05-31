@@ -21,7 +21,6 @@ export default class OrderListing {
     }
     async init(){
         const list = getLocatStorageByType("orders", this.type);//await this.dataSource.findOrdersByType(this.type);
-        
         this.renderList(list);
         this.setTitle();
     }
@@ -49,6 +48,7 @@ export default class OrderListing {
     resetList() {
         const list = getLocatStorageByType("orders", this.type);
         this.listElement.innerHTML = "";
+        document.querySelector("#search-text").value = "";
         this.renderList(list);
     }
     setTitle() {
@@ -57,5 +57,9 @@ export default class OrderListing {
         if (this.type === "active") {
             document.querySelector("#new").classList.remove("hide");
         }
+    }
+    cleareLocalStorage() {
+        setLocalStorage("clients", null);
+        setLocalStorage("orders", null);
     }
 }

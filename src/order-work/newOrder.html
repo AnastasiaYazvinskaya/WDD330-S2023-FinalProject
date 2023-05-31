@@ -10,102 +10,125 @@
   <body>
     <header id="main-header"><!-- partials/header.html --></header>
     <main>
-        <h1>New order #<span id="orderId"></span></h1>
-        <form id="order-details" name="order">
-            <div class="block">
-                <h3>Client</h3>
-                <div class="flex client">
-                    <div class="row">
-                        <label for="fullname"><b>Full name:</b></label>
-                        <input type="text" id="fullname" name="fullname" list="clients" />
-                        <datalist id="clients"></datalist>
-                    </div>
-                    <div class="row">
-                        <label for="contact"><b>Contact:</b></label>
-                        <input type="text" id="contact" name="contact" placeholder="8 900 000 00 00" />
-                    </div>
-                </div>
+      <h1>New order #<span id="orderId"></span></h1>
+      <form id="order-details" name="order">
+        <div class="block">
+          <h3>Client</h3>
+          <div class="flex client">
+            <div class="row">
+              <label for="fullname"><b>Full name:</b></label>
+              <input type="text" id="fullname" name="fullname" list="clients" />
+              <datalist id="clients"></datalist>
             </div>
-            <div class="block">
-                <h3>Equipment</h3>
-                <div class="flex equipment">
-                    <div class="row">
-                        <label for="type"><b>Type:</b></label>
-                        <input type="text" id="type" name="type" list="types" required />
-                        <datalist id="types"></datalist>
-                    </div>
-                    <div class="row">
-                        <label for="brand"><b>Brand:</b></label>
-                        <input type="text" id="brand" name="brand" list="brands" required />
-                        <datalist id="brands"></datalist>
-                    </div>
-                    <div class="row">
-                        <label for="model"><b>Model:</b></label>
-                        <input type="text" id="model" name="model" required />
-                    </div>
-                </div>
-                <div class="row">
-                    <label for="defects"><b>Defects:</b></label>
-                    <textarea id="defects" name="defects"></textarea>
-                </div>
-                <div class="row">
-                    <label for="complaints"><b>Complaints:</b></label>
-                    <textarea id="complaints" name="complaints"></textarea>
-                </div>
+            <div class="row">
+              <label for="contact"><b>Contact:</b></label>
+              <input
+                type="text"
+                id="contact"
+                name="contact"
+                placeholder="8 900 000 00 00"
+              />
             </div>
-            <div class="block">
-                <h3>Assesments</h3>
-                <div class="table-data">
-                    <p><b>Services</b></p>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th id="price">Price</th>
-                            </tr>
-                        </thead>
-                        <tbody id="work">
-                            <tr>
-                                <td>
-                                    <select id="in-work" class="in-work" name="works">
-                                        <option></option>
-                                    </select>
-                                </td>
-                                <td class="work-price"></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <button type="button" class="add add-service">+ Service</button>
-                </div>
-                <div class="table-data">
-                    <p><b>Spares</b></p>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th id="price">Price</th>
-                            </tr>
-                        </thead>
-                        <tbody id="spares">
-                            <tr>
-                                <td>
-                                    <select id="in-spare" class="in-spare" name="spare">
-                                        <option></option>
-                                    </select>
-                                </td>
-                                <td class="spare-price"></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <button type="button" class="add add-spare">+ Spare</button>
-                </div>
-                <p><b>Estimated price: <span id="total">0.00</span> RUB</b></p>
+          </div>
+        </div>
+        <div class="block">
+          <h3>Equipment</h3>
+          <div class="flex equipment">
+            <div class="row">
+              <label for="type"><b>Type:</b></label>
+              <input type="text" id="type" name="type" list="types" required />
+              <datalist id="types"></datalist>
             </div>
-            <div id="create-buttons">
-                <a id="cancel" class="button" href="../order-listing/index.html?type=active">Cancel</a>
-                <button id="next" type="submit" href="../order-listing/index.html?type=active">Create</a>
+            <div class="row">
+              <label for="brand"><b>Brand:</b></label>
+              <input
+                type="text"
+                id="brand"
+                name="brand"
+                list="brands"
+                required
+              />
+              <datalist id="brands"></datalist>
             </div>
-        </form>
+            <div class="row">
+              <label for="model"><b>Model:</b></label>
+              <input type="text" id="model" name="model" required />
+            </div>
+          </div>
+          <div class="row">
+            <label for="defects"><b>Defects:</b></label>
+            <textarea id="defects" name="defects"></textarea>
+          </div>
+          <div class="row">
+            <label for="complaints"><b>Complaints:</b></label>
+            <textarea id="complaints" name="complaints" required></textarea>
+          </div>
+        </div>
+        <div class="block">
+          <h3>Assesments</h3>
+          <div class="table-data">
+            <p><b>Services</b></p>
+            <table>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th id="price">Price</th>
+                </tr>
+              </thead>
+              <tbody id="work">
+                <tr>
+                  <td>
+                    <select class="in-work w1" name="works">
+                      <option></option>
+                    </select>
+                  </td>
+                  <td class="work-price"></td>
+                </tr>
+              </tbody>
+            </table>
+            <button type="button" class="add add-service">+ Service</button>
+          </div>
+          <div class="table-data">
+            <p><b>Spares</b></p>
+            <table>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th id="price">Price</th>
+                </tr>
+              </thead>
+              <tbody id="spares">
+                <tr>
+                  <td>
+                    <select class="in-spare s1" name="spare">
+                      <option></option>
+                    </select>
+                  </td>
+                  <td class="spare-price"></td>
+                </tr>
+              </tbody>
+            </table>
+            <button type="button" class="add add-spare">+ Spare</button>
+          </div>
+          <p>
+            <b>Estimated price: <span id="total">0.00</span> RUB</b>
+          </p>
+        </div>
+        <div id="create-buttons">
+          <a
+            id="cancel"
+            class="button"
+            href="../order-listing/index.html?type=active"
+            >Cancel</a
+          >
+          <button
+            id="next"
+            type="submit"
+          >
+            Create
+          </button>
+        </div>
+      </form>
     </main>
     <footer id="main-footer"><!-- partials/footer.html --></footer>
   </body>
