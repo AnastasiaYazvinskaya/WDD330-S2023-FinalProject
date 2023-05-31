@@ -1,0 +1,21 @@
+[
+    {
+        "EquipmentTypes": [
+            "chainsaw",
+            "electric saw",
+            "lawn mower",
+            "walk-behind tractor"
+        ],
+        "Brands": [
+            "Brand1",
+            "Brand2",
+            "Brand3"
+        ],
+        "Models": [
+            "Model1",
+            "Model2",
+            "Model3",
+            "Model4"
+        ]
+    }
+]

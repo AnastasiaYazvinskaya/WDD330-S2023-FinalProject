@@ -12,12 +12,14 @@
     <main>
       <h1><span id="list-type"></span> orders</h1>
       <div id="content">
-        <!--<div class="row">
-          <form>
-            <input type="text" name="search" />
+        <div class="row" id="list-head">
+          <a id="new" class="button hide" href="../order-work/newOrder.html">+ Order</a>
+          <form id="search-form">
+            <input type="text" name="search" id="search-text" />
             <button type="submit" id="filterList">Search</button>
+            <button type="submit" id="filterReset">Reset</button>
           </form>
-        </div>-->
+        </div>
         <table>
           <!-- Active/Closed orders -->
           <thead>

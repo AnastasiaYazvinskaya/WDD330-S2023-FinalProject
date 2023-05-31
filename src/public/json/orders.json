@@ -28,9 +28,11 @@
         }
       ]
     },
+    "Defects": "Defects",
+    "Complaints": "Complaints",
     "FinalPrice": 200.0,
     "WorkStage": "closed",
-    "Type": "closed",
+    "Type": "",
     "CreationDate": "2023-10-12"
   },
   {
@@ -52,6 +54,11 @@
           "Id": "1",
           "Name": "Service name",
           "Price": 100.0
+        },
+        {
+          "Id": "2",
+          "Name": "Service name 2",
+          "Price": 150.0
         }
       ],
       "Spares": [
@@ -62,7 +69,9 @@
         }
       ]
     },
-    "FinalPrice": 200.0,
+    "Defects": "Defects",
+    "Complaints": "Complaints",
+    "FinalPrice": 350.0,
     "WorkStage": "in work",
     "Type": "active",
     "CreationDate": "2023-10-12"
@@ -96,6 +105,7 @@
         }
       ]
     },
+    "Complaints": "Complaints",
     "FinalPrice": 200.0,
     "WorkStage": "new",
     "Type": "active",

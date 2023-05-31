@@ -11,7 +11,7 @@ export default class ExternalServices {
     this.category = category;
     this.path = `../json/${this.category}.json`;
   }
-  getData(type, value=null) {
+  getData() {
     return fetch(this.path)
         .then(convertToJson)
         .then((data) => data);
@@ -24,6 +24,10 @@ export default class ExternalServices {
     const orders = await this.getData();
     return orders.find((item) => item.Id === id);
   }
+  async findOrderByName(name) {
+    const orders = await this.getData();
+    return orders.find((item) => item.Name === name);
+  }  
   async checkout(payload) {
     const options = {
       method: "POST",
