@@ -1,7 +1,7 @@
 {
   "name": "outside",
   "version": "2.0.0",
-  "description": "Boilerplate for WDD 330 SleepOutside project",
+  "description": "WDD 330 - S2023 - Yazvinskaya Anastasia - FixWork (Final Project)",
   "main": "main.js",
   "scripts": {
     "start": "vite",

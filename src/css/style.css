@@ -83,6 +83,9 @@ nav a {
   display: none;
 }
 /*  */
+main {
+  padding-bottom: 3em;
+}
 .mission {
   padding: 0 0.5em;
   line-height: 1.3em;
@@ -189,7 +192,7 @@ input {
   width: 200px;
   height: 25px;
 }
-button {
+button, .button {
   width: fit-content;
   padding: 2px 5px;
   font-size: 1em;
@@ -197,7 +200,83 @@ button {
   color: var(--bg-color);
   border: none;
   border-radius: 5px;
+  cursor: pointer;
 }
+/* view order */
+.block {
+  border: 1px black solid;
+  margin: 0.5em;
+  padding: 5px;
+  margin-bottom: 1em;
+}
+.block h3 {
+  margin-top: -1em;
+  margin-bottom: 10px;
+  background-color: var(--bg-color);
+  width: fit-content;
+  padding: 0 5px;
+}
+#order-details p, #order-details label{
+  margin: 5px;
+}
+.flex {
+  display: flex;
+  flex-direction: column;
+}
+.row {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+textarea {
+  margin-top: 0.5em;
+  height: 3em;
+  width: 100%;
+}
+#final-price {
+  font-size: 1.2em;
+}
+label {
+  width: 50%;
+}
+input, select {
+  width: 100%;
+}
+#search-form {
+  position: absolute;
+  right: 0;
+}
+#search-form input {
+  width: 200px;
+}
+#list-head {
+  height: 1.5em;
+}
+
+/* Buttons */
+#buttons {
+  position: relative;
+  height: 1.5em;
+}
+#buttons .button {
+  position: absolute;
+  right: 0.5em;
+  margin: 0.5em;
+}
+#next {
+  position: absolute;
+  right: 0.5em;
+}
+#cancel {
+  margin-left: 0.5em;
+}
+.add {
+  background-color: #dae064;
+  color: black;
+  font-size: 0.8em;
+  width: 5em;
+}
+
 
 /* FOOTER */
 footer {
@@ -205,14 +284,11 @@ footer {
   padding: 1em;
   width: 100%;
   background-color: var(--secondary-color);
+  position: absolute;
+  bottom: 0;
 }
 
 @media screen and (min-width: 600px) {
-  footer {
-    position: absolute;
-    /*height: 79.2vh;*/
-    bottom: 0;
-  }
   .logo a {
     font-size: 1.7em;
   }
@@ -230,5 +306,37 @@ footer {
   table th,
   table td {
     padding: 5px;
+  }
+  #order-details, #buttons, #create-buttons {
+    margin: 0 auto;
+    max-width: 80%;
+    position: relative;
+  }
+  #create-buttons {
+    max-width: 100%;
+  }
+  .flex {
+    flex-direction: row;
+  }
+  .row {
+    flex-direction: row;
+  }
+  label {
+    width: 15%;
+  }
+  input, select {
+    width: 80%;
+  }
+  table select {
+    width: 100%;
+  }
+  .flex p:nth-child(n), .client .row {
+    width: 50%;
+  }
+  .equipment .row {
+    width: 33%;
+  }
+  textarea {
+    height: 1.5em;
   }
 }

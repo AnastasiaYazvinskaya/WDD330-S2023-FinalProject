@@ -9,6 +9,37 @@ export function qs(selector, parent = document) {
 export function getLocalStorage(key) {
   return JSON.parse(localStorage.getItem(key));
 }
+export function getLocatStorageByType(key, type) {
+  var list = getLocalStorage(key);
+  if (list) {
+    return list.filter((item) => item.Type === type);
+  }
+  return list;
+}
+export function getLocatStorageById(key, id) {
+  var list = getLocalStorage(key);
+  if (list) {
+    return list.filter((item) => item.Id === id);
+  }
+  return list;
+}
+export function filterLocatStorage(key, type, input) {
+  var list = getLocatStorageByType(key, type);
+  console.log(list);
+  if (list) {
+    console.log(list);
+    return list.filter((item) => (
+              item.Equipment.Name == input ||
+              item.Equipment.Brand == input ||
+              item.Equipment.Model == input ||
+              item.Client.Name == input ||
+              item.Client.Contact == input ||
+              item.WorkStage == input ||
+              item.CreationDate == input ||
+              item.Number == input ));
+  }
+  return list;
+}
 // save data to local storage
 export function setLocalStorage(key, data) {
   localStorage.setItem(key, JSON.stringify(data));
