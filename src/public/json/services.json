@@ -1,14 +1,68 @@
 [
   {
+    "Id": "0",
+    "Name": "Diagnostics",
+    "Price": 500.0,
+    "Spares": ["4"]
+  },
+  {
     "Id": "1",
-    "Name": "Service1 name",
-    "Price": 100.0,
+    "Name": "Gearbox replacement",
+    "Price": 600.0,
     "Spares": ["1"]
   },
   {
     "Id": "2",
-    "Name": "Service2 name",
-    "Price": 150.0,
+    "Name": "Carburetor Maintenance",
+    "Price": 1500.0,
     "Spares": ["2"]
+  },
+  {
+    "Id": "3",
+    "Name": "Spark plug replacement",
+    "Price": 250.0,
+    "Spares": ["3"]
+  },
+  {
+    "Id": "4",
+    "Name": "Chain sharpening",
+    "Price": 110.0,
+    "Spares": ["4"]
+  },
+  {
+    "Id": "5",
+    "Name": "Fuel filter replacement",
+    "Price": 80.0,
+    "Spares": ["4"]
+  },
+  {
+    "Id": "6",
+    "Name": "Fuel line replacement",
+    "Price": 200.0,
+    "Spares": ["4"]
+  },
+  {
+    "Id": "7",
+    "Name": "Clutch replacement",
+    "Price": 1100.0,
+    "Spares": ["4"]
+  },
+  {
+    "Id": "8",
+    "Name": "magneto replacement",
+    "Price": 900.0,
+    "Spares": ["4"]
+  },
+  {
+    "Id": "9",
+    "Name": "ignition coil replacement",
+    "Price": 750.0,
+    "Spares": ["4"]
+  },
+  {
+    "Id": "10",
+    "Name": "air filter replacement",
+    "Price": 150.0,
+    "Spares": ["4"]
   }
 ]

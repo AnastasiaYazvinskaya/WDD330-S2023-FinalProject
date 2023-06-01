@@ -15,6 +15,7 @@
   --small-font: 0.8em;
   --large-font: 1.2em;
 }
+/* Standart styles */
 * {
   box-sizing: border-box;
 }
@@ -78,14 +79,27 @@ nav img {
 nav a {
   margin: auto 5px;
 }
+/* FOOTER */
+footer {
+  font-size: var(--small-font);
+  padding: 1em;
+  width: 100%;
+  background-color: var(--secondary-color);
+  position: absolute;
+  bottom: 0;
+}
+/* General */
 .hide,
 .mobile-hide {
   display: none;
 }
-/*  */
 main {
   padding-bottom: 3em;
 }
+main h1 {
+  text-align: center;
+}
+/* Main page */
 .mission {
   padding: 0 0.5em;
   line-height: 1.3em;
@@ -99,7 +113,6 @@ main {
 .variants {
   padding: 0.5em;
 }
-
 .var-grid {
   list-style-type: none;
   display: flex;
@@ -140,13 +153,12 @@ main {
   box-shadow: 0 0 30px var(--secondary-color);
   transform: scale(1.2);
 }
-main h1 {
-  text-align: center;
-}
+/* Additional pages */
 #content {
   margin: 0 auto;
   max-width: 860px;
 }
+/* Tables */
 table {
   width: 100%;
   margin: 5px auto;
@@ -170,7 +182,6 @@ table a {
 table a:hover {
   text-decoration: underline;
 }
-
 #number {
   width: 70px;
 }
@@ -189,23 +200,10 @@ table a:hover {
 .left {
   text-align: left;
 }
-
-input {
-  width: 200px;
-  height: 25px;
+.emptyRow {
+  height: 1.6em;
 }
-button,
-.button {
-  width: fit-content;
-  padding: 2px 5px;
-  font-size: 1em;
-  background-color: var(--tertiary-color);
-  color: var(--bg-color);
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-/* view order */
+/* Order view */
 .block {
   border: 1px black solid;
   margin: 0.5em;
@@ -232,6 +230,11 @@ button,
   flex-direction: column;
   position: relative;
 }
+/* Form */
+input {
+  width: 200px;
+  height: 25px;
+}
 textarea {
   margin-top: 0.5em;
   height: 3em;
@@ -239,6 +242,7 @@ textarea {
 }
 #final-price {
   font-size: 1.2em;
+  width: 100%;
 }
 label {
   width: 50%;
@@ -247,6 +251,7 @@ input,
 select {
   width: 100%;
 }
+/* Search */
 #search-form {
   position: absolute;
   right: 0;
@@ -257,16 +262,32 @@ select {
 #list-head {
   height: 1.5em;
 }
-
 /* Buttons */
 #buttons {
   position: relative;
   height: 1.5em;
 }
+button,
+.button {
+  width: fit-content;
+  padding: 2px 5px;
+  font-size: 1em;
+  background-color: var(--tertiary-color);
+  color: var(--bg-color);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
 #buttons .button {
   position: absolute;
   right: 0.5em;
   margin: 0.5em;
+}
+.button-hide {
+  background-color: var(--bg-color);
+}
+.button-hide:hover {
+  background-color: var(--tertiary-color);
 }
 #next {
   position: absolute;
@@ -289,17 +310,26 @@ select {
   font-size: 0.8em;
   width: 5em;
 }
-
-/* FOOTER */
-footer {
-  font-size: var(--small-font);
-  padding: 1em;
-  width: 100%;
-  background-color: var(--secondary-color);
-  position: absolute;
-  bottom: 0;
+#check-link {
+  height: fit-content;
+  margin-top: 5px;
+}
+/* Alert */
+.alert {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5em;
+  background-color: var(--additional-color);
+}
+.alert > p {
+  margin: 0;
+}
+.alert > span {
+  cursor: pointer;
 }
 
+/* Large view adaptation */
 @media screen and (min-width: 600px) {
   .logo a {
     font-size: 1.7em;

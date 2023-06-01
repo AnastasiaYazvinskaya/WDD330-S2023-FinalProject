@@ -1,12 +1,37 @@
 [
   {
+    "Id": "0",
+    "Name": "air filter",
+    "Price": 50.0
+  },
+  {
     "Id": "1",
-    "Name": "Spare1 name",
-    "Price": 100.0
+    "Name": "Carburetor repair kit",
+    "Price": 150.0
   },
   {
     "Id": "2",
-    "Name": "Spare2 name",
-    "Price": 50.0
+    "Name": "Carburetor Cleaner",
+    "Price": 800.0
+  },
+  {
+    "Id": "3",
+    "Name": "Fuel filter",
+    "Price": 25.0
+  },
+  {
+    "Id": "4",
+    "Name": "Ignition coil",
+    "Price": 200.0
+  },
+  {
+    "Id": "5",
+    "Name": "Magneto",
+    "Price": 250.0
+  },
+  {
+    "Id": "6",
+    "Name": "Clutch",
+    "Price": 470.0
   }
 ]
