@@ -14,7 +14,7 @@ Available functions for an employee:
 [FixWork site (Netlify)](https://voluble-pithivier-112040.netlify.app/)
 
 ## Development
-[Project plan document](/ProjectPlan.pdf)
+[Project plan document](/ProjectPlan.pdf) <br>
 [Trello board](https://trello.com/b/QSSzadGg/wdd330-final-project)
 
 Possible improvements:
