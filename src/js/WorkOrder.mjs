@@ -114,7 +114,7 @@ export default class WorkOrder {
     document.querySelector("#complaints").innerHTML = this.order.Complaints;
     //Works
     const works = document.querySelector("#work");
-    if (this.order.Works.length != 0) {
+    if (this.order.Works.length != 0 && this.order.Works[0] != "") {
         for (var i=0; i < this.order.Works.length; i++) {
             const service = await new ExternalServices("services").findOrderById(this.order.Works[i]);
             this.orderTotal += service.Price;
@@ -144,7 +144,7 @@ export default class WorkOrder {
         document.querySelector(".w1").addEventListener("change", this.setPrice.bind(this));
     }
     const spares = document.querySelector("#spares");
-    if (this.order.Spares.length != 0) {
+    if (this.order.Spares.length != 0  && this.order.Spares[0] != "") {
         for (var i in this.order.Spares) {
             const spare = await new ExternalServices("spares").findOrderById(this.order.Spares[i]);
             this.orderTotal += spare.Price;
@@ -190,7 +190,6 @@ export default class WorkOrder {
         "Name": name,
         "Contact": contact
     });  
-    console.log(clients);
     setLocalStorage("clients", clients);
   }
   setPrice() {
@@ -296,7 +295,8 @@ export default class WorkOrder {
         "WorkStage": "new",
         "Defects": json.defects,
         "Complaints": json.complaints,
-        "FinalPrice": this.orderTotal
+        "FinalPrice": this.orderTotal,
+        "Check": ""
     };
     const works = document.querySelectorAll(".in-work");
     for (var i=0; i < works.length; i++) {
@@ -306,7 +306,7 @@ export default class WorkOrder {
     }
     const spares = document.querySelectorAll(".in-spare");
     for (var i=0; i < spares.length; i++) {
-        if (works[i].value) {
+        if (spares[i].value) {
             order.Spares.push(spares[i].value);
         }
     }
@@ -319,7 +319,7 @@ export default class WorkOrder {
     setLocalStorage("orders", content);
 
     const client = findClientByNameAndContact("clients", order.Client.Name, order.Client.Contact);
-    if (!client) {
+    if (client.length === 0) {
         this.saveClient(order.Client.Name, order.Client.Contact);
     }
 
@@ -330,29 +330,52 @@ export default class WorkOrder {
     const number = this.orderId;
     
     var order = this.order;
-    order.Works = [];
-    order.Spares = [];
     order.WorkStage = "closed";
     order.Type = "closed";
     order.FinalPrice = this.orderTotal;
-    
+    const preVal = {
+        "Works": order.Works,
+        "Spares": order.Spares
+    }
+    order.Works = [];
+    order.Spares = [];
     const works = document.querySelectorAll(".in-work");
     for (var i=0; i < works.length; i++) {
         if (works[i].value) {
-            order.Works.push(works[i].value);
+            const work = await new ExternalServices("services").findOrderById(works[i].value);
+            order.Works.push({
+                "Name": work.Name,
+                "Price": work.Price
+            });
         }
     }
     const spares = document.querySelectorAll(".in-spare");
     for (var i=0; i < spares.length; i++) {
-        if (works[i].value) {
-            order.Spares.push(spares[i].value);
+        if (spares[i].value) {
+            const spare = await new ExternalServices("spares").findOrderById(spares[i].value);
+            order.Spares.push({
+                "Name": spare.Name,
+                "Price": spare.Price
+            });
         }
     }
+
+    try {
+        removeAllAlerts();
+        alertMessage("Data saved! A check is being generated...");
+        const res = await new ExternalServices().check(order);
+        console.log(res);
+        order.Check = res.download_url;
+    } catch (err) {
+        console.log(err);
+    }
+    order.Works = preVal.Works;
+    order.Spares = preVal.Spares;
 
     content[this.orderId] = order;
 
     setLocalStorage("orders", content);
-    //console.log(getLocalStorage("orders"));
+
     location.assign("../order-listing/index.html?type=active")
   }
   async save() {
@@ -381,47 +404,46 @@ export default class WorkOrder {
     content[this.orderId] = order;
 
     setLocalStorage("orders", content);
-    location.assign("../order-listing/index.html?type=active")
+
+    removeAllAlerts();
+    alertMessage("Order data saved!");
+    
+    //location.assign("../order-listing/index.html?type=active")
   }
   async check() {
     var order = this.order;
-    order.Works = [];
-    order.Spares = [];
     order.WorkStage = "in work";
     order.FinalPrice = this.orderTotal;
-    
+    order.Works = [];
+    order.Spares = [];
     const works = document.querySelectorAll(".in-work");
     for (var i=0; i < works.length; i++) {
         if (works[i].value) {
-            const work = new ExternalServices("services").findOrderById(works[i].value);
-            work.then((item) => {
-                order.Works.push({
-                    "Name": item.Name,
-                    "Price": item.Price
-                });
+            const work = await new ExternalServices("services").findOrderById(works[i].value);
+            order.Works.push({
+                "Name": work.Name,
+                "Price": work.Price
             });
         }
     }
     const spares = document.querySelectorAll(".in-spare");
     for (var i=0; i < spares.length; i++) {
         if (spares[i].value) {
-            //order.Spares.push(spares[i].value);
-            const spare = new ExternalServices("spares").findOrderById(spares[i].value);
-            /*order.Spares.push({
+            const spare = await new ExternalServices("spares").findOrderById(spares[i].value);
+            order.Spares.push({
                 "Name": spare.Name,
                 "Price": spare.Price
-            });*/
-            spare.then((item) => {
-                order.Spares.push({
-                    "Name": item.Name,
-                    "Price": item.Price
-                });
             });
         }
     }
+    
     try {
-      const res = await new ExternalServices().check(order);
+        removeAllAlerts();
+        alertMessage(`A check is being generated`);
+        const res = await new ExternalServices().check(order);
       console.log(res);
+      removeAllAlerts();
+      alertMessage(`Order check created! You can see it <a href="${res.download_url}">HERE</a>`);
       window.open(res.download_url);
     } catch (err) {
       console.log(err);

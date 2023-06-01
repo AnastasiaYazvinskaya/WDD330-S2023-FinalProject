@@ -3,7 +3,7 @@ import ExternalServices from "./ExternalServices.mjs";
 
 /* This script file will contain the code to dynamically produce the order detail pages. */
 function orderDetailsTemplate(order) {
-    return `<div class="block">
+    var HTMLElement = `<div class="block">
         <h3>Info</h3>
         <div class="flex">
             <p><b>Equpment:</b> ${order.Equipment.Name} ${order.Equipment.Brand} ${order.Equipment.Model}</p>
@@ -43,8 +43,13 @@ function orderDetailsTemplate(order) {
                 <tbody id="spares"></tbody>
             </table>
         </div>
-        <p id="final-price"><b>Final price: ${order.FinalPrice} RUB</b></p>
-    </div>`;
+        <div class="row">
+            <p id="final-price"><b>Final price: ${order.FinalPrice} RUB</b></p>`
+    if (order.Type === "closed") {
+        HTMLElement += `<a href="${order.Check}" id="check-link" class="button">Check</a>`;
+    }
+    HTMLElement += `</div></div>`;
+    return HTMLElement;
   }
 function orderWorksTemplate(work) {
     return `<tr>
@@ -83,8 +88,33 @@ function orderSparesTemplate(spare) {
             "afterBegin",
             orderDetailsTemplate(this.order)
         );
-        this.renderOrderWorks();
-        this.renderOrderSpares();
+
+        if (this.order.Works.length != 0 && this.order.Works[0] != ""){
+            this.renderOrderWorks();
+        } else {
+            document.querySelector("#work").insertAdjacentHTML(
+                "beforeEnd",
+                `<tr class="emptyRow">
+                    <td>
+                    </td>
+                    <td class="spare-price"></td>
+                </tr>`
+            );
+        }
+        console.log(this.order);
+        if (this.order.Spares.length != 0 && this.order.Spares[0] != ""){
+            this.renderOrderSpares();
+        } else {
+            document.querySelector("#spares").insertAdjacentHTML(
+                "beforeEnd",
+                `<tr class="emptyRow">
+                    <td>
+                    </td>
+                    <td class="spare-price"></td>
+                </tr>`
+            );
+        }
+        
         if (this.order.Type === "active") {
             this.renderButtonInWork();
         } else if (this.order.Type === "closed") {
@@ -114,12 +144,10 @@ function orderSparesTemplate(spare) {
     }
     renderButtonInWork()  {
         const element = document.querySelector("#buttons");
-        for (var i in this.order.Spares) {
-            element.insertAdjacentHTML(
+        element.insertAdjacentHTML(
                 "afterBegin",
                 `<a class="button" href="../order-work/closeOrder.html?order=${this.order.Id}">In work</a>`
-            );
-        }
+        );
     }
     renderButtonReopen()  {
         const element = document.querySelector("#buttons");

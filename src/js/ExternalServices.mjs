@@ -38,7 +38,6 @@ export default class ExternalServices {
       },
       body: JSON.stringify({order}),
     };
-    console.log(options);
     return await fetch(url, options).then(convertToJson);
   }
 }
