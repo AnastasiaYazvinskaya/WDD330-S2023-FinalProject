@@ -396,7 +396,7 @@ export default class WorkOrder {
     }
     const spares = document.querySelectorAll(".in-spare");
     for (var i=0; i < spares.length; i++) {
-        if (works[i].value) {
+        if (spares[i].value) {
             order.Spares.push(spares[i].value);
         }
     }
