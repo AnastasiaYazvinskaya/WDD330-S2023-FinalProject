@@ -333,10 +333,6 @@ export default class WorkOrder {
     order.WorkStage = "closed";
     order.Type = "closed";
     order.FinalPrice = this.orderTotal;
-    const preVal = {
-        "Works": order.Works,
-        "Spares": order.Spares
-    }
     order.Works = [];
     order.Spares = [];
     const works = document.querySelectorAll(".in-work");
@@ -359,6 +355,8 @@ export default class WorkOrder {
             });
         }
     }
+    order.Works = this.order.Works;
+    order.Spares = this.order.Works;
 
     try {
         removeAllAlerts();
