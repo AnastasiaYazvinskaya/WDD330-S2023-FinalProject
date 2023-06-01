@@ -31,3 +31,11 @@ document.querySelector("#next").addEventListener("click", (e) => {
     newOrder.create();
   }
 });
+document.addEventListener('DOMContentLoaded', () => {
+  const contact = document.querySelector('#contact');
+  const maskOptions = {
+    mask: '8 000 000 00-00'
+  };
+  IMask(contact, maskOptions);
+
+})
