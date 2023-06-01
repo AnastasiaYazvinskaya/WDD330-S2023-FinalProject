@@ -19,7 +19,7 @@ document.querySelector("#filterReset").addEventListener("click", (e) => {
   e.preventDefault();
   list.resetList();
 });
-/*document.querySelector("#clearLS").addEventListener("click", (e) => {
+document.querySelector("#clearLS").addEventListener("click", (e) => {
   e.preventDefault();
   list.cleareLocalStorage();
-});*/
+});
