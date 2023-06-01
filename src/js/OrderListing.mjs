@@ -1,4 +1,4 @@
-import { filterLocatStorage, getLocatStorageByType, renderListTemplate } from "./utils.mjs";
+import { filterLocatStorage, getLocatStorageByType, setLocalStorage, renderListTemplate } from "./utils.mjs";
 
 /* Generate a list of product cards in HTML from an array */
 function orderRowTemplate(order) {
