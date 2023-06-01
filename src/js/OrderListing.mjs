@@ -20,17 +20,13 @@ export default class OrderListing {
       this.listElement = listElement;
     }
     async init(){
-        const list = getLocatStorageByType("orders", this.type);//await this.dataSource.findOrdersByType(this.type);
+        const list = getLocatStorageByType("orders", this.type);
         this.renderList(list);
         this.setTitle();
     }
     renderList(list) {
-        if (list) {
-            if (list.length != 0) {
-                renderListTemplate(orderRowTemplate, this.listElement, list);
-            } else {
-                this.listElement.innerHTML = "<tr><td colspan='7'>No orders</td></tr>";
-            }
+        if (list.length != 0) {
+            renderListTemplate(orderRowTemplate, this.listElement, list);
         } else {
             this.listElement.innerHTML = "<tr><td colspan='7'>No orders</td></tr>";
         }
@@ -39,7 +35,7 @@ export default class OrderListing {
         this.listElement.innerHTML = "";
         const input = document.querySelector("#search-text").value;
         const list = filterLocatStorage("orders", this.type, input)//await this.dataSource.findOrdersByType(this.type, input);
-        if (list) {
+        if (list.length != 0) {
             renderListTemplate(orderRowTemplate, this.listElement, list);
         } else {
             this.listElement.innerHTML = "<tr><td colspan='7'>No orders</td></tr>";
@@ -61,5 +57,8 @@ export default class OrderListing {
     cleareLocalStorage() {
         setLocalStorage("clients", null);
         setLocalStorage("orders", null);
+        const list = getLocatStorageByType("orders", this.type);
+        this.listElement.innerHTML = "";
+        this.renderList(list);
     }
 }

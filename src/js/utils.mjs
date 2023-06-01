@@ -13,6 +13,8 @@ export function getLocatStorageByType(key, type) {
   var list = getLocalStorage(key);
   if (list) {
     return list.filter((item) => item.Type === type);
+  } else {
+    list = [];
   }
   return list;
 }
@@ -20,6 +22,8 @@ export function getLocatStorageById(key, id) {
   var list = getLocalStorage(key);
   if (list) {
     return list.filter((item) => item.Id === id);
+  } else {
+    list = [];
   }
   return list;
 }
@@ -35,6 +39,8 @@ export function filterLocatStorage(key, type, input) {
               item.WorkStage == input ||
               item.CreationDate == input ||
               item.Number == input ));
+  } else {
+    list = [];
   }
   return list;
 }
@@ -42,6 +48,8 @@ export function findClientByNameAndContact(key, name, contact) {
   var list = getLocalStorage(key);
   if (list) {
     return list.filter((item) => (item.Name === name && item.Contact === contact));
+  } else {
+    list = [];
   }
   return list;
 }
