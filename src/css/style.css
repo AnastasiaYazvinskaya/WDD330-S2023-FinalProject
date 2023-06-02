@@ -310,9 +310,11 @@ button,
   font-size: 0.8em;
   width: 5em;
 }
-#check-link {
+#check-button {
   height: fit-content;
   margin-top: 5px;
+  position: absolute;
+  right: 0;
 }
 /* Alert */
 .alert {

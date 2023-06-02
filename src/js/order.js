@@ -9,3 +9,4 @@ const orderId = getParams("order");
 
 const order = new OrderDetails(orderId, dataSource);
 order.init();
+
