@@ -46,7 +46,7 @@ function orderDetailsTemplate(order) {
         <div class="row">
             <p id="final-price"><b>Final price: ${order.FinalPrice} RUB</b></p>`
     if (order.Type === "closed") {
-        HTMLElement += `<a href="${order.Check}" id="check-link" class="button">Check</a>`;
+        HTMLElement += `<button id="check-button" type="button" class="check-button">Check</a>`;
     }
     HTMLElement += `</div></div>`;
     return HTMLElement;
@@ -73,14 +73,9 @@ function orderSparesTemplate(spare) {
     async init(form="view"){
         this.order = getLocatStorageById("orders", this.orderId)[0];//await this.dataSource.findOrderById(this.orderId);
         
-        if (form == "view"){
             this.renderOrderDetails("#order-details");
             document.querySelector("#orderId").insertAdjacentHTML("afterbegin", `${this.order.Number}`);
-        } else if (form == "create") {
-            console.log("create");
-        } else if (form == "close") {
-            console.log("close");
-        }
+            
     }
     renderOrderDetails(selector) {
         const element = document.querySelector(selector);
@@ -101,7 +96,6 @@ function orderSparesTemplate(spare) {
                 </tr>`
             );
         }
-        console.log(this.order);
         if (this.order.Spares.length != 0 && this.order.Spares[0] != ""){
             this.renderOrderSpares();
         } else {
@@ -119,7 +113,10 @@ function orderSparesTemplate(spare) {
             this.renderButtonInWork();
         } else if (this.order.Type === "closed") {
             //this.renderButtonReopen();
-            console.log("closed");
+            document.querySelector("#check-button").addEventListener("click", (e) => {
+                e.preventDefault();
+                this.openCheck();
+              });
         }
     }
     async renderOrderWorks() {
@@ -157,5 +154,8 @@ function orderSparesTemplate(spare) {
                 `<a class="button" href="../order-work/newOrder.html?order=${this.order.Id}">Reopen</a>`
             );
         }
+    }
+    openCheck() {
+        window.open(this.order.Check);
     }
   }

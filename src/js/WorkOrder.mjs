@@ -327,19 +327,21 @@ export default class WorkOrder {
   }
   async close() {
     let content = getLocalStorage("orders");
-    const number = this.orderId;
     
-    var order = this.order;
-    order.WorkStage = "closed";
-    order.Type = "closed";
-    order.FinalPrice = this.orderTotal;
-    order.Works = [];
-    order.Spares = [];
+    this.order.WorkStage = "closed";
+    this.order.Type = "closed";
+    this.order.FinalPrice = this.orderTotal;
+    const preVal = {
+        "Works": this.order.Works,
+        "Spares": this.order.Spares
+    };
+    this.order.Works = [];
+    this.order.Spares = [];
     const works = document.querySelectorAll(".in-work");
     for (var i=0; i < works.length; i++) {
         if (works[i].value) {
             const work = await new ExternalServices("services").findOrderById(works[i].value);
-            order.Works.push({
+            this.order.Works.push({
                 "Name": work.Name,
                 "Price": work.Price
             });
@@ -349,57 +351,53 @@ export default class WorkOrder {
     for (var i=0; i < spares.length; i++) {
         if (spares[i].value) {
             const spare = await new ExternalServices("spares").findOrderById(spares[i].value);
-            order.Spares.push({
+            this.order.Spares.push({
                 "Name": spare.Name,
                 "Price": spare.Price
             });
         }
     }
-    order.Works = this.order.Works;
-    order.Spares = this.order.Works;
-
     try {
         removeAllAlerts();
         alertMessage("Data saved! A check is being generated...");
-        const res = await new ExternalServices().check(order);
+        const res = await new ExternalServices().check(this.order);
         console.log(res);
-        order.Check = res.download_url;
+        this.order.Check = res.download_url;
     } catch (err) {
         console.log(err);
     }
-    order.Works = preVal.Works;
-    order.Spares = preVal.Spares;
+    
+    this.order.Works = preVal.Works;
+    this.order.Spares = preVal.Works;
 
-    content[this.orderId] = order;
+    content[this.orderId] = this.order;
 
     setLocalStorage("orders", content);
 
     location.assign("../order-listing/index.html?type=active")
   }
-  async save() {
+  save() {
     let content = getLocalStorage("orders");
-    const number = this.orderId;
     
-    var order = this.order;
-    order.Works = [];
-    order.Spares = [];
-    order.WorkStage = "in work";
-    order.FinalPrice = this.orderTotal;
+    this.order.Works = [];
+    this.order.Spares = [];
+    this.order.WorkStage = "in work";
+    this.order.FinalPrice = this.orderTotal;
     
     const works = document.querySelectorAll(".in-work");
     for (var i=0; i < works.length; i++) {
         if (works[i].value) {
-            order.Works.push(works[i].value);
+            this.order.Works.push(works[i].value);
         }
     }
     const spares = document.querySelectorAll(".in-spare");
     for (var i=0; i < spares.length; i++) {
         if (spares[i].value) {
-            order.Spares.push(spares[i].value);
+            this.order.Spares.push(spares[i].value);
         }
     }
 
-    content[this.orderId] = order;
+    content[this.orderId] = this.order;
 
     setLocalStorage("orders", content);
 
@@ -409,16 +407,19 @@ export default class WorkOrder {
     //location.assign("../order-listing/index.html?type=active")
   }
   async check() {
-    var order = this.order;
-    order.WorkStage = "in work";
-    order.FinalPrice = this.orderTotal;
-    order.Works = [];
-    order.Spares = [];
+    this.order.WorkStage = "in work";
+    this.order.FinalPrice = this.orderTotal;
+    const preVal = {
+        "Works": this.order.Works,
+        "Spares": this.order.Spares
+    };
+    this.order.Works = [];
+    this.order.Spares = [];
     const works = document.querySelectorAll(".in-work");
     for (var i=0; i < works.length; i++) {
         if (works[i].value) {
             const work = await new ExternalServices("services").findOrderById(works[i].value);
-            order.Works.push({
+            this.order.Works.push({
                 "Name": work.Name,
                 "Price": work.Price
             });
@@ -428,17 +429,16 @@ export default class WorkOrder {
     for (var i=0; i < spares.length; i++) {
         if (spares[i].value) {
             const spare = await new ExternalServices("spares").findOrderById(spares[i].value);
-            order.Spares.push({
+            this.order.Spares.push({
                 "Name": spare.Name,
                 "Price": spare.Price
             });
         }
     }
-    
     try {
         removeAllAlerts();
         alertMessage(`A check is being generated`);
-        const res = await new ExternalServices().check(order);
+        const res = await new ExternalServices().check(this.order);
       console.log(res);
       removeAllAlerts();
       alertMessage(`Order check created! You can see it <a href="${res.download_url}">HERE</a>`);
@@ -446,5 +446,8 @@ export default class WorkOrder {
     } catch (err) {
       console.log(err);
     }
+
+    this.order.Works = preVal.Works;
+    this.order.Spares = preVal.Works;
   }
 }
